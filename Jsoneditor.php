@@ -33,10 +33,6 @@ class Jsoneditor extends InputWidget
             $this->name = Html::getInputName($this->model, $this->attribute);
         }
 
-        if (empty($this->value)) {
-            $this->value = '{}';
-        }
-
         $this->options['id'] .= '-jsoneditor';
     }
 
@@ -44,6 +40,10 @@ class Jsoneditor extends InputWidget
     {
         $view = $this->getView();
         JsoneditorAsset::register($view);
+
+        if (!(string)$this->value) {
+            $this->value = Json::encode($this->value);
+        }
 
         $editorName = BaseInflector::camelize($this->id) . 'Editor';
 
